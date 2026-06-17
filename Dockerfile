@@ -1,6 +1,7 @@
 ARG PYTHON_VERSION=3.12
+ARG PYTHON_IMAGE=mirror.gcr.io/library/python
 
-FROM python:$PYTHON_VERSION-slim AS build
+FROM ${PYTHON_IMAGE}:${PYTHON_VERSION}-slim AS build
 
 ENV PYTHONUNBUFFERED=1
 
@@ -15,7 +16,7 @@ COPY ./requirements.txt /code/
 RUN python3 -m pip install --upgrade pip setuptools \
     && pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-FROM python:$PYTHON_VERSION-slim
+FROM ${PYTHON_IMAGE}:${PYTHON_VERSION}-slim
 
 ENV PYTHON_LIB_PATH=/usr/local/lib/python${PYTHON_VERSION%.*}/site-packages
 WORKDIR /code
