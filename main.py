@@ -15,9 +15,11 @@ from logger import logger
 def generate_ssl_files():
     pems = generate_certificate()
 
+    os.makedirs(os.path.dirname(SSL_KEY_FILE) or ".", exist_ok=True)
     with open(SSL_KEY_FILE, 'w') as f:
         f.write(pems['key'])
 
+    os.makedirs(os.path.dirname(SSL_CERT_FILE) or ".", exist_ok=True)
     with open(SSL_CERT_FILE, 'w') as f:
         f.write(pems['cert'])
 
